@@ -1,0 +1,182 @@
+{
+  "Oppenheimer": {
+    "poster": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/neeNHeXjMF5fXoCJRsOmkNGC7q.jpg"
+  },
+  "Barbie": {
+    "poster": "https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/1esAE8sLJRWWFsLLeh5r3g2WanI.jpg"
+  },
+  "Dune: Part Two": {
+    "poster": "https://image.tmdb.org/t/p/w500/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/eZ239CUp1d6OryZEBPnO2n87gMG.jpg"
+  },
+  "Poor Things": {
+    "poster": "https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/zh6IdheEYinU4TPtorWsjx6qPQE.jpg"
+  },
+  "Killers of the Flower Moon": {
+    "poster": "https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/acvE3RWjDLgvbL2RtcyzkrsAyNV.jpg"
+  },
+  "Deadpool & Wolverine": {
+    "poster": "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/by8z9Fe8y7p4jo2YlW2SZDnptyT.jpg"
+  },
+  "The Shawshank Redemption": {
+    "poster": "https://image.tmdb.org/t/p/w500/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/pNjh59JSxChQktamG3LMp9ZoQzp.jpg"
+  },
+  "The Godfather": {
+    "poster": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/ejdD20cdHNFAYAN2DlqPToXKyzx.jpg"
+  },
+  "The Dark Knight": {
+    "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/9FE5eD92WfVCiivM9Pq9GVSrlWk.jpg"
+  },
+  "Schindler's List": {
+    "poster": "https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/zb6fM1CX41D9rF9hdgclu0ixU49.jpg"
+  },
+  "Pulp Fiction": {
+    "poster": "https://image.tmdb.org/t/p/w500/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg"
+  },
+  "Inception": {
+    "poster": "https://image.tmdb.org/t/p/w500/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg"
+  },
+  "Gladiator II": {
+    "poster": "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/tOqIwliWMovSIZ9DyvHcHI7p2im.jpg"
+  },
+  "Wicked": {
+    "poster": "https://image.tmdb.org/t/p/w500/xDGbZ0JJ3mYaGKy4Nzd9Kph6M9L.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/w22GVYotTIVC1dUd58mRhwPqiS.jpg"
+  },
+  "Joker: Folie à Deux": {
+    "poster": "https://image.tmdb.org/t/p/w500/aciP8Km0waTL31MfMw9SQemOGIf.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/uGmYqxh8flqkM2Ilr4QkGgE4bZg.jpg"
+  },
+  "Alien: Romulus": {
+    "poster": "https://image.tmdb.org/t/p/w500/2uSWRTtCG336nuBiG8jOTEUKSy8.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/iYqSQaWDttQIQzsxg9xHyg0bttG.jpg"
+  },
+  "Transformers One": {
+    "poster": "https://image.tmdb.org/t/p/w500/iRCgqpdVE4wyLQvGYU3ZP7pAtUc.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/cMfokHWle5lfCreoV08cbmkKv6G.jpg"
+  },
+  "Inside Out 2": {
+    "poster": "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/p5ozvmdgsmbWe0H8Xk7Rc8SCwAB.jpg"
+  },
+  "Twisters": {
+    "poster": "https://image.tmdb.org/t/p/w500/pjnD08FlMAIXsfOLKQbvmO0f0MD.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/58D6ZAvOKxlHjyX9S8qNKSBE9Y.jpg"
+  },
+  "A Quiet Place: Day One": {
+    "poster": "https://image.tmdb.org/t/p/w500/hU42CRk14JuPEdqZG3AWmagiPAP.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/6XjMwQTvnICBz6TguiDKkDVHvgS.jpg"
+  },
+  "Longlegs": {
+    "poster": "https://image.tmdb.org/t/p/w500/1EwNyiiNFd863H4e8nWEzutnZD7.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/6ToGkmqn0KG0UGGGUAC1Ww0e5CM.jpg"
+  },
+  "Despicable Me 4": {
+    "poster": "https://image.tmdb.org/t/p/w500/wWba3TaojhK7NdycRhoQpsG0FaH.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/twsxsfao6ZOVvT8LfudH603MMi6.jpg"
+  },
+  "Everything Everywhere All at Once": {
+    "poster": "https://image.tmdb.org/t/p/w500/u68AjlvlutfEIcpmbYpKcdi09ut.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/fIwiFha3WPu5nHkBeMQ4GzEk0Hv.jpg"
+  },
+  "CODA": {
+    "poster": "https://image.tmdb.org/t/p/w500/BzVjmm8l23rPsijLiNLUzuQtyd.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/v85FlkbMYKa5du1glm0YfYNsL2n.jpg"
+  },
+  "Parasite": {
+    "poster": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg"
+  },
+  "Nomadland": {
+    "poster": "https://image.tmdb.org/t/p/w500/8Vc5EOUEIF1EUXuX9eLFf7BvN3P.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/563sRDK3rZS31TXCdTY4lfcwrNK.jpg"
+  },
+  "The Power of the Dog": {
+    "poster": "https://image.tmdb.org/t/p/w500/kEy48iCzGnp0ao1cZbNeWR6yIhC.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/gAsHuCQMN7mv4uFIvM4ACQ09hPr.jpg"
+  },
+  "RRR": {
+    "poster": "https://image.tmdb.org/t/p/w500/wE0I6efAW4cDDmZQWtwZMOW44EJ.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/i0Y0wP8H6SRgjr6QmuwbtQbS24D.jpg"
+  },
+  "Drive My Car": {
+    "poster": "https://image.tmdb.org/t/p/w500/znXps7wPyYq8UDCfeyO2vfEIeRS.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/r6aqhlmJmu8Dv5E7QYEruaEXKYm.jpg"
+  },
+  "The Great Beauty": {
+    "poster": "https://image.tmdb.org/t/p/w500/7suf0vaQfv5E7X1GVh4HJwK90yo.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/4T5d7KGrpx3BTDq9IKm6KpMeeNp.jpg"
+  },
+  "Capernaum": {
+    "poster": "https://image.tmdb.org/t/p/w500/mFnfTVADj8yOxwzprYOmTPselk8.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/sEW8q9al73rtow257dXAusD9yS7.jpg"
+  },
+  "Shoplifters": {
+    "poster": "https://image.tmdb.org/t/p/w500/4nfRUOv3LX5zLn98WS1WqVBk9E9.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/dVRkhmtDn3EiyhX6c9SfL7klCoU.jpg"
+  },
+  "Free Solo": {
+    "poster": "https://image.tmdb.org/t/p/w500/v4QfYZMACODlWul9doN9RxE99ag.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/z2uuQasY4gQJ8VDAFki746JWeQJ.jpg"
+  },
+  "13th": {
+    "poster": "https://image.tmdb.org/t/p/w500/uGGpnWHOmWTARVN9wbC1nPxNgps.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/edVRp9npNwQwJtD05KyZlzp1J2p.jpg"
+  },
+  "Won't You Be My Neighbor?": {
+    "poster": "https://image.tmdb.org/t/p/w500/8qE8NZjiP2M884baH0VoLF828Vp.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/yrepQdpreOorLyBJyvZkGn3Izfe.jpg"
+  },
+  "The Last Dance": {
+    "poster": "https://image.tmdb.org/t/p/w500/oVf4xGGbDtwVHiKn8uTuSriY7PH.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/kY0h95L73t7a6ev6Rv0aHSCtN7y.jpg"
+  },
+  "Coco": {
+    "poster": "https://image.tmdb.org/t/p/w500/6Ryitt95xrO8KXuqRGm1fUuNwqF.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/g7CHF8gTLGooTbP4GznIGwaqAGL.jpg"
+  },
+  "The Lion King": {
+    "poster": "https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/q00H8EqULYSK74lgevMkhmGGLHn.jpg"
+  },
+  "Moana": {
+    "poster": "https://image.tmdb.org/t/p/w500/gaet1xQ2nxrG0V1Ep9T20ZMNEIC.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/c6BPbkO5Npt1OdwttAxCFo06wtH.jpg"
+  },
+  "Encanto": {
+    "poster": "https://image.tmdb.org/t/p/w500/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/3G1Q5xF40HkUBJXxt2DQgQzKTp5.jpg"
+  },
+  "Spider-Man: Into the Spider-Verse": {
+    "poster": "https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/1ntePsIqeklfmrQJqZPncCydsqY.jpg"
+  },
+  "Breaking Bad": {
+    "poster": "https://image.tmdb.org/t/p/w500/anFx9aTOOYqgS3v7x3R84Kz67ly.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/tsRy63Mu5cu8etL1X7ZLyf7UP1M.jpg"
+  },
+  "Game of Thrones": {
+    "poster": "https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/zZqpAXxVSBtxV9qPBcscfXBcL2w.jpg"
+  },
+  "Chernobyl": {
+    "poster": "https://image.tmdb.org/t/p/w500/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/900tHlUYUkp7Ol04XFSoAaEIXcT.jpg"
+  },
+  "The Last of Us": {
+    "poster": "https://image.tmdb.org/t/p/w500/dmo6TYuuJgaYinXBPjrgG9mB5od.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/lY2DhbA7Hy44fAKddr06UrXWWaQ.jpg"
+  }
+}

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReelRush – Ultimate Movie Discovery & Streaming Recommendations</title>
+  <meta name="description" content="Discover trending movies, watch 4K trailers, explore verified ratings, and book tickets on BookMyShow."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff3344;
+      --primary-hover: #ff192e;
+      --primary-glow: rgba(255, 51, 68, 0.35);
+      --bg-dark: #07070c;
+      --bg-card: #11111a;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(255, 255, 255, 0.18);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --gold: #f5c518;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a10; }
+    ::-webkit-scrollbar-thumb { background: #262638; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 72px;
+      background: rgba(7, 7, 12, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(7, 7, 12, 0.98);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      height: 66px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 36px; }
+    .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 25px; font-weight: 900; letter-spacing: -0.5px;
+      cursor: pointer; user-select: none;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #ff3344, #ff6b3d);
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; box-shadow: 0 4px 15px var(--primary-glow);
+    }
+    .logo .r1 { color: #ffffff; }
+    .logo .r2 { color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 14px; }
+    .nav-link {
+      color: var(--text-muted); font-size: 13.5px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; border: none; background: none;
+      padding: 8px 12px; border-radius: 8px; position: relative;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #fff; background: rgba(255, 255, 255, 0.05);
+    }
+    .nav-link.active::after {
+      content: ''; position: absolute; bottom: 0; left: 14px; right: 14px; height: 2px;
+      background: var(--primary); border-radius: 2px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .search-wrap { position: relative; }
+    .search-box {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px; padding: 8px 16px;
+      transition: all 0.25s ease; width: 220px;
+    }
+    .search-box:focus-within {
+      border-color: var(--primary);
+      background: rgba(255, 51, 68, 0.06);
+      width: 310px; box-shadow: 0 0 0 3px rgba(255, 51, 68, 0.15);
+    }
+    .search-box input {
+      background: transparent; border: none; outline: none;
+      color: #fff; font-size: 13px; width: 100%; font-family: inherit;
+    }
+    .search-box input::placeholder { color: #71717a; }
+    .search-drop {
+      position: absolute; top: calc(100% + 12px); right: 0; width: 380px;
+      background: #12121c; border: 1px solid var(--border-highlight);
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+      z-index: 1000; display: none; max-height: 440px; overflow-y: auto;
+    }
+    .search-drop.open { display: block; }
+    .sdrop-header {
+      padding: 12px 18px; font-size: 11px; color: #a1a1aa;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+      background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-subtle);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sdrop-item {
+      display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+      cursor: pointer; transition: background 0.18s; border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .sdrop-item:hover { background: rgba(255, 51, 68, 0.12); }
+    .sdrop-thumb {
+      width: 44px; height: 60px; border-radius: 6px; object-fit: cover; flex-shrink: 0;
+      background: #20202e;
+    }
+    .sdrop-info { flex: 1; min-width: 0; }
+    .sdrop-title { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sdrop-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .sdrop-imdb {
+      display: flex; align-items: center; gap: 4px; background: rgba(245, 197, 24, 0.12);
+      padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: 700; color: var(--gold);
+    }
+    .wl-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255, 51, 68, 0.1); border: 1px solid rgba(255, 51, 68, 0.3);
+      color: #fff; border-radius: 20px; padding: 8px 16px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .wl-pill:hover {
+      background: var(--primary); box-shadow: 0 4px 15px var(--primary-glow);
+    }
+    .wl-count {
+      background: #fff; color: var(--bg-dark); font-size: 11px;
+      font-weight: 800; padding: 1px 7px; border-radius: 12px;
+    }
+
+    .hero {
+      position: relative; width: 100%; height: 620px;
+      overflow: hidden; margin-top: 72px;
+    }
+    .hslide {
+      position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hslide.active { opacity: 1; z-index: 2; }
+    .hslide-bg {
+      position: absolute; inset: 0; background-size: cover; background-position: center 25%;
+      transform: scale(1.04); transition: transform 6s ease-out;
+    }
+    .hslide.active .hslide-bg { transform: scale(1); }
+    .hslide-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(7, 7, 12, 0.96) 20%, rgba(7, 7, 12, 0.75) 55%, rgba(7, 7, 12, 0.25) 100%),
+                  linear-gradient(to top, rgba(7, 7, 12, 1) 0%, rgba(7, 7, 12, 0) 40%);
+    }
+    .hcontent {
+      position: absolute; bottom: 90px; left: 54px; z-index: 5; max-width: 650px;
+    }
+    .hbadge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--primary); color: #fff; font-size: 11px; font-weight: 800;
+      letter-spacing: 1px; padding: 6px 14px; border-radius: 6px;
+      text-transform: uppercase; margin-bottom: 16px;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+    .htitle {
+      font-family: 'Outfit', sans-serif;
+      font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 14px;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    }
+    .hmeta {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .imdb-badge {
+      background: var(--gold); color: #000; font-size: 11px; font-weight: 900;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .rating-val { font-weight: 800; font-size: 16px; color: var(--gold); }
+    .dot { width: 4px; height: 4px; border-radius: 50%; background: #666; }
+    .hyr, .hdur, .hgenre-tag { color: #d1d5db; font-size: 14px; font-weight: 500; }
+    .hgenre-tag {
+      background: rgba(255,255,255,0.1); padding: 2px 10px; border-radius: 12px; font-size: 12px;
+    }
+    .hdesc {
+      font-size: 14.5px; color: #d1d5db; line-height: 1.7; margin-bottom: 26px;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .hbtns { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      padding: 12px 24px; border-radius: 10px; cursor: pointer;
+      transition: all 0.25s ease; border: none; text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      box-shadow: 0 6px 20px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover); transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--primary-glow);
+    }
+    .btn-trailer {
+      background: rgba(255, 255, 255, 0.12); color: #fff;
+      backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-trailer:hover {
+      background: rgba(255, 255, 255, 0.22); transform: translateY(-2px);
+    }
+    .btn-bms {
+      background: linear-gradient(135deg, #e31837, #b01027); color: #fff;
+      box-shadow: 0 6px 18px rgba(227, 24, 55, 0.35);
+    }
+    .btn-bms:hover {
+      transform: translateY(-2px); box-shadow: 0 8px 24px rgba(227, 24, 55, 0.5);
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.08); color: #fff;
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.15); }
+    .sdots { position: absolute; bottom: 30px; left: 54px; display: flex; gap: 10px; z-index: 10; }
+    .sdot {
+      width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3);
+      cursor: pointer; transition: all 0.3s;
+    }
+    .sdot.active { background: var(--primary); width: 28px; border-radius: 6px; }
+    .sarrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      background: rgba(18, 18, 28, 0.6); border: 1px solid var(--border-subtle);
+      border-radius: 50%; width: 48px; height: 48px; display: flex;
+      align-items: center; justify-content: center; cursor: pointer;
+      transition: all 0.2s; backdrop-filter: blur(6px); color: #fff;
+    }
+    .sarrow:hover { background: var(--primary); border-color: var(--primary); }
+    .sarrow.prev { left: 24px; }
+    .sarrow.next { right: 24px; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      background: #0d0d16; border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .stat {
+      text-align: center; padding: 22px 14px;
+      border-right: 1px solid var(--border-subtle);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #d1d5db 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-l { color: var(--text-muted); font-size: 12px; margin-top: 4px; font-weight: 500; }
+
+    .genre-bar-wrap { padding: 24px 54px 0; display: flex; align-items: center; gap: 12px; }
+    .genre-bar {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none;
+    }
+    .genre-bar::-webkit-scrollbar { display: none; }
+    .gpill {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle);
+      color: #9ca3af; font-size: 13px; font-weight: 600; padding: 8px 18px;
+      border-radius: 20px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .gpill:hover {
+      background: rgba(255, 51, 68, 0.12); border-color: rgba(255, 51, 68, 0.4); color: #fff;
+    }
+    .gpill.active {
+      background: var(--primary); border-color: var(--primary); color: #fff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .sec { padding: 34px 54px 10px; position: relative; }
+    .sec-hd { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+    .sec-title-group { display: flex; flex-direction: column; gap: 4px; }
+    .sec-subtitle { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--primary); font-weight: 800; }
+    .sec-title { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
+    .crow {
+      display: flex; gap: 18px; overflow-x: auto; padding: 10px 4px 20px;
+      scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(255, 51, 68, 0.4) transparent;
+    }
+    .crow::-webkit-scrollbar { height: 5px; }
+    .crow::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    .crow::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    .mcard {
+      flex: 0 0 195px; border-radius: 12px; overflow: hidden;
+      background: var(--bg-card); cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative; border: 1px solid var(--border-subtle);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .mcard:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      border-color: rgba(255, 51, 68, 0.3);
+    }
+    .cposter-box { width: 100%; height: 285px; position: relative; overflow: hidden; background: #161622; }
+    .cposter-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .mcard:hover .cposter-img { transform: scale(1.06); }
+    .cov {
+      position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 7, 12, 0.95) 10%, rgba(7, 7, 12, 0.4) 60%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 14px;
+      opacity: 0; transition: opacity 0.3s ease; gap: 8px;
+    }
+    .mcard:hover .cov { opacity: 1; }
+    .cov-btns { display: flex; flex-direction: column; gap: 6px; }
+    .cov-btn {
+      padding: 7px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
+      text-align: center; border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .cov-btn.t-btn { background: var(--primary); color: #fff; }
+    .cov-btn.t-btn:hover { background: var(--primary-hover); }
+    .cov-btn.b-btn { background: #e31837; color: #fff; }
+    .cov-btn.b-btn:hover { background: #c0142c; }
+    .cov-btn.w-btn { background: rgba(255, 255, 255, 0.15); color: #fff; backdrop-filter: blur(4px); }
+    .cov-btn.w-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+    .cbadge {
+      position: absolute; top: 10px; left: 10px; z-index: 3;
+      padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 800;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .badge-trend { background: var(--primary); color: #fff; }
+    .badge-new { background: #10b981; color: #fff; }
+    .badge-award { background: var(--gold); color: #000; }
+    .badge-world { background: #0ea5e9; color: #fff; }
+    .badge-web { background: #8b5cf6; color: #fff; }
+    .badge-docu { background: #ec4899; color: #fff; }
+    .badge-fam { background: #14b8a6; color: #fff; }
+
+    .cinfo { padding: 12px 14px; }
+    .ctitle {
+      font-size: 14px; font-weight: 700; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;
+    }
+    .cmeta { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+    .cyr { color: var(--text-muted); }
+    .cimdb { display: flex; align-items: center; gap: 4px; font-weight: 700; color: var(--gold); }
+    .cgenre-txt {
+      font-size: 11px; color: #71717a; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .tcard {
+      flex: 0 0 320px; height: 185px; border-radius: 12px; overflow: hidden;
+      background: var(--bg-card); cursor: pointer; position: relative;
+      transition: all 0.3s ease; border: 1px solid var(--border-subtle);
+    }
+    .tcard:hover {
+      transform: translateY(-5px); border-color: rgba(245, 197, 24, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    }
+    .tcard-bg {
+      position: absolute; inset: 0; background-size: cover; background-position: center;
+      transition: transform 0.5s ease;
+    }
+    .tcard:hover .tcard-bg { transform: scale(1.05); }
+    .tcard-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(7, 7, 12, 0.95) 0%, rgba(7, 7, 12, 0.6) 65%, transparent 100%);
+      padding: 18px 20px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .tcard-rank {
+      font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 900;
+      line-height: 1; color: rgba(255, 255, 255, 0.15); margin-bottom: 2px;
+    }
+    .tcard-title { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .tcard-sub { font-size: 12px; color: var(--text-muted); }
+    .tcard-imdb {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+      font-size: 13px; font-weight: 800; color: var(--gold);
+    }
+
+    .ucard {
+      flex: 0 0 215px; border-radius: 12px; overflow: hidden;
+      background: var(--bg-card); cursor: pointer; position: relative;
+      transition: all 0.3s ease; border: 1px solid var(--border-subtle);
+    }
+    .ucard:hover { transform: translateY(-7px); border-color: rgba(139, 92, 246, 0.4); }
+    .upost-box { width: 100%; height: 300px; position: relative; }
+    .upost-img { width: 100%; height: 100%; object-fit: cover; }
+    .rdate-tag {
+      position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.75);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
+      padding: 4px 8px; font-size: 10.5px; font-weight: 700; color: #fff; backdrop-filter: blur(4px);
+    }
+
+    .news-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px; margin-top: 10px;
+    }
+    .news-card {
+      background: var(--bg-card); border-radius: 12px; overflow: hidden;
+      cursor: pointer; transition: all 0.3s ease; border: 1px solid var(--border-subtle);
+      display: flex; flex-direction: column;
+    }
+    .news-card:hover {
+      transform: translateY(-5px); border-color: rgba(255, 51, 68, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+    .news-thumb {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      position: relative; background: #181826;
+    }
+    .news-cat {
+      position: absolute; top: 12px; left: 12px; background: var(--primary);
+      color: #fff; font-size: 9.5px; font-weight: 800; padding: 4px 10px;
+      border-radius: 4px; text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .news-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+    .news-date { font-size: 11px; color: #71717a; margin-bottom: 8px; }
+    .news-title { font-size: 15px; font-weight: 800; line-height: 1.4; color: #fff; margin-bottom: 10px; }
+    .news-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; flex: 1; }
+    .news-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border-subtle); padding-top: 12px; font-size: 12px;
+    }
+    .news-read { color: var(--primary); font-weight: 700; }
+    .divider {
+      height: 1px; background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
+      margin: 15px 54px;
+    }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9);
+      z-index: 1000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .trailer-box {
+      position: relative; width: 920px; max-width: 95vw; background: #000;
+      border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+      transform: scale(0.92); transition: transform 0.3s ease;
+      border: 1px solid var(--border-highlight);
+    }
+    .modal-overlay.open .trailer-box { transform: scale(1); }
+    .trailer-header {
+      padding: 16px 22px; background: #0e0e18; font-size: 15px; font-weight: 700;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .trailer-box iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
+    .modal-close-btn {
+      background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle);
+      color: #fff; width: 34px; height: 34px; border-radius: 50%; font-size: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+    .det-modal {
+      background: #0d0d16; border: 1px solid var(--border-highlight);
+      border-radius: 18px; width: 840px; max-width: 96vw; max-height: 92vh;
+      overflow-y: auto; transform: scale(0.92); transition: transform 0.3s ease;
+      position: relative; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+    }
+    .modal-overlay.open .det-modal { transform: scale(1); }
+    .det-hero-banner {
+      height: 330px; position: relative; background-size: cover; background-position: center;
+    }
+    .det-hero-gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, #0d0d16 10%, rgba(13, 13, 22, 0.4) 70%, transparent 100%);
+    }
+    .det-body { padding: 0 34px 34px; position: relative; }
+    .det-floating-header {
+      display: flex; gap: 24px; margin-top: -80px; margin-bottom: 22px; position: relative; z-index: 5;
+    }
+    .det-poster-thumb {
+      width: 140px; height: 210px; border-radius: 12px; object-fit: cover;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); border: 2px solid var(--border-highlight);
+      flex-shrink: 0; background: #161622;
+    }
+    .det-header-info { flex: 1; padding-top: 55px; }
+    .det-title {
+      font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 900; line-height: 1.15; color: #fff;
+    }
+    .det-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .det-badge {
+      padding: 4px 12px; border-radius: 16px; font-size: 11px; font-weight: 600;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle); color: #d1d5db;
+    }
+    .det-meta-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 22px;
+    }
+    .dmi { text-align: center; }
+    .dmi-lbl { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .dmi-val { font-size: 16px; font-weight: 800; margin-top: 4px; color: #fff; }
+    .dmi-val.gold { color: var(--gold); }
+    .det-desc { color: #d1d5db; font-size: 14.5px; line-height: 1.8; margin-bottom: 24px; }
+    .det-section-title {
+      font-size: 12px; font-weight: 800; color: #9ca3af; text-transform: uppercase;
+      letter-spacing: 1.2px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .det-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-subtle); }
+    .cast-grid { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+    .cast-card {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      width: 82px; text-align: center;
+    }
+    .cast-avatar {
+      width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 24px; background: #1c1c2a;
+      border: 2px solid var(--border-subtle);
+    }
+    .cast-name { font-size: 11.5px; font-weight: 700; color: #fff; }
+    .cast-role { font-size: 10px; color: var(--text-muted); }
+    .rel-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 24px; }
+    .rel-card {
+      flex: 0 0 120px; border-radius: 8px; overflow: hidden; background: #141420;
+      cursor: pointer; transition: transform 0.2s; border: 1px solid var(--border-subtle);
+    }
+    .rel-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+    .rel-poster { width: 100%; height: 170px; object-fit: cover; background: #1f1f2e; }
+    .rel-info { padding: 8px; }
+    .rel-title { font-size: 11.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rel-year { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+    .det-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .toast {
+      position: fixed; bottom: 28px; right: 28px; background: #161624;
+      border: 1px solid var(--border-highlight); border-radius: 12px;
+      padding: 14px 22px; display: flex; align-items: center; gap: 12px;
+      font-size: 13.5px; font-weight: 600; z-index: 2000;
+      transform: translateY(100px); opacity: 0; transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    .footer {
+      background: #08080f; border-top: 1px solid var(--border-subtle);
+      padding: 60px 54px 30px; margin-top: 50px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+    }
+    .footer-desc { color: var(--text-muted); font-size: 13.5px; line-height: 1.7; margin-top: 12px; max-width: 380px; }
+    .footer-heading { color: #fff; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .footer-link { color: var(--text-muted); font-size: 13.5px; display: block; margin-bottom: 10px; cursor: pointer; transition: color 0.2s; }
+    .footer-link:hover { color: var(--primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle); padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #71717a; font-size: 12.5px; flex-wrap: wrap; gap: 14px;
+    }
+
+    @media(max-width: 900px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { height: 500px; }
+      .hcontent { left: 24px; bottom: 50px; max-width: 90%; }
+      .htitle { font-size: 32px; }
+      .sec { padding: 26px 20px 10px; }
+      .genre-bar-wrap { padding: 18px 20px 0; }
+      .divider { margin: 10px 20px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .det-floating-header { flex-direction: column; align-items: center; text-align: center; margin-top: -60px; }
+      .det-badges { justify-content: center; }
+      .det-header-info { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-left">
+    <div class="logo" onclick="resetHome()">
+      <div class="logo-badge">🍿</div>
+      <div><span class="r1">Reel</span><span class="r2">Rush</span></div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="navTo('home', this)">Home</button>
+      <button class="nav-link" onclick="navTo('trending', this)">Trending</button>
+      <button class="nav-link" onclick="navTo('top', this)">Top Rated</button>
+      <button class="nav-link" onclick="navTo('upcoming', this)">Upcoming</button>
+      <button class="nav-link" onclick="navTo('award', this)">Awards</button>
+      <button class="nav-link" onclick="navTo('world', this)">World Cinema</button>
+      <button class="nav-link" onclick="navTo('news', this)">News</button>
+      <button class="nav-link" onclick="navTo('watchlist', this)">Watchlist</button>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="search-wrap" id="searchWrap">
+      <div class="search-box">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="#9ca3af" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="searchInput" type="text" placeholder="Search 45+ movies, cast, genres…" oninput="doSearch(this.value)" onfocus="doSearch(this.value)" autocomplete="off"/>
+        <span id="searchClear" onclick="clearSearch()" style="cursor:pointer;color:#71717a;font-size:16px;display:none">✕</span>
+      </div>
+      <div class="search-drop" id="searchDrop"></div>
+    </div>
+    <div class="wl-pill" onclick="navTo('watchlist', null)">
+      <span>🎯 My List</span>
+      <span class="wl-count" id="wlCount">0</span>
+    </div>
+  </div>
+</nav>
+
+<div class="hero" id="heroWrap"></div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">50,000+</div><div class="stat-l">Movies & Series</div></div>
+  <div class="stat"><div class="stat-n">4K Ultra HDR</div><div class="stat-l">Official Trailers</div></div>
+  <div class="stat"><div class="stat-n">Verified</div><div class="stat-l">IMDb Ratings</div></div>
+  <div class="stat"><div class="stat-n">BookMyShow</div><div class="stat-l">Direct Ticket Booking</div></div>
+  <div class="stat"><div class="stat-n">100% Free</div><div class="stat-l">Recommendations</div></div>
+</div>
+
+<div class="genre-bar-wrap">
+  <div class="genre-bar" id="genreBar">
+    <button class="gpill active" onclick="setGenre('All', this)">🎬 All Categories</button>
+    <button class="gpill" onclick="setGenre('Action', this)">⚡ Action</button>
+    <button class="gpill" onclick="setGenre('Drama', this)">🎭 Drama</button>
+    <button class="gpill" onclick="setGenre('Sci-Fi', this)">🚀 Sci-Fi</button>
+    <button class="gpill" onclick="setGenre('Thriller', this)">🔪 Thriller</button>
+    <button class="gpill" onclick="setGenre('Comedy', this)">😄 Comedy</button>
+    <button class="gpill" onclick="setGenre('Horror', this)">👻 Horror</button>
+    <button class="gpill" onclick="setGenre('Animation', this)">🎨 Animation</button>
+    <button class="gpill" onclick="setGenre('Romance', this)">❤️ Romance</button>
+    <button class="gpill" onclick="setGenre('Crime', this)">🕵️ Crime</button>
+    <button class="gpill" onclick="setGenre('Musical', this)">🎵 Musical</button>
+  </div>
+</div>
+
+<div id="mainContent"></div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="logo">
+        <div class="logo-badge">🍿</div>
+        <div><span class="r1">Reel</span><span class="r2">Rush</span></div>
+      </div>
+      <p class="footer-desc">
+        Your ultimate entertainment discovery companion. Watch official trailers, explore ratings, discover award winners, and reserve cinema tickets with high efficiency.
+      </p>
+    </div>
+    <div>
+      <div class="footer-heading">Explore</div>
+      <a class="footer-link" onclick="navTo('trending')">🔥 Trending Movies</a>
+      <a class="footer-link" onclick="navTo('top')">⭐ Top IMDb Hall of Fame</a>
+      <a class="footer-link" onclick="navTo('upcoming')">🗓️ Upcoming Cinema</a>
+      <a class="footer-link" onclick="navTo('award')">🏆 Oscar & BAFTA Winners</a>
+      <a class="footer-link" onclick="navTo('world')">🌍 Global World Cinema</a>
+    </div>
+    <div>
+      <div class="footer-heading">Categories</div>
+      <a class="footer-link" onclick="setGenreQuick('Action')">Action & Thrillers</a>
+      <a class="footer-link" onclick="setGenreQuick('Sci-Fi')">Sci-Fi & Adventures</a>
+      <a class="footer-link" onclick="setGenreQuick('Drama')">Drama & Classics</a>
+      <a class="footer-link" onclick="setGenreQuick('Animation')">Family & Animation</a>
+      <a class="footer-link" onclick="navTo('news')">Movie News & Reviews</a>
+    </div>
+    <div>
+      <div class="footer-heading">Features</div>
+      <a class="footer-link" onclick="navTo('watchlist')">🎯 My Saved Watchlist</a>
+      <a class="footer-link">🎟️ BookMyShow Booking</a>
+      <a class="footer-link">▶️ YouTube 4K Trailers</a>
+      <a class="footer-link">⚡ Instant Search Engine</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 ReelRush™ · Professional Cinema & Streaming Discovery Platform. All rights reserved.</div>
+    <div style="display:flex;gap:18px;font-size:18px;">
+      <span>🎬</span><span>🍿</span><span>⭐</span><span>🎟️</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="detOverlay" onclick="closeDetOutside(event)">
+  <div class="det-modal" id="detModal">
+    <button class="modal-close-btn" onclick="closeDet()" style="position:absolute;top:18px;right:18px;z-index:10;">✕</button>
+    <div class="det-hero-banner" id="detHero">
+      <div class="det-hero-gradient"></div>
+    </div>
+    <div class="det-body">
+      <div class="det-floating-header">
+        <img class="det-poster-thumb" id="detPoster" src="" alt="Movie Poster"/>
+        <div class="det-header-info">
+          <div class="det-title" id="detTitle"></div>
+          <div class="det-badges" id="detBadges"></div>
+        </div>
+      </div>
+      <div class="det-meta-grid" id="detMeta"></div>
+      <p class="det-desc" id="detDesc"></p>
+      
+      <div class="det-section-title">🎭 Lead Cast & Crew</div>
+      <div class="cast-grid" id="detCast"></div>
+
+      <div class="det-section-title">🎬 Similar Titles You Might Like</div>
+      <div class="rel-row" id="detRelated"></div>
+
+      <div class="det-actions" id="detActions"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="trailerOverlay" onclick="closeTrailerOutside(event)">
+  <div class="trailer-box">
+    <div class="trailer-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="color:var(--primary);font-size:18px;">▶️</span>
+        <span id="trailerMovieTitle">Official Movie Trailer</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a id="trailerExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:7px 16px;font-size:12.5px;box-shadow:none;">
+          ▶ Open on YouTube
+        </a>
+        <button class="modal-close-btn" onclick="closeTrailer()" title="Close">✕</button>
+      </div>
+    </div>
+    
+    <div id="trailerPlayerContainer" style="position:relative;width:100%;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center;">
+      <iframe id="trailerFrame" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:100%;border:none;"></iframe>
+      
+      <!-- Video Fallback Card (shown if embedding is restricted by YouTube) -->
+      <div id="trailerFallbackNotice" style="display:none;position:absolute;inset:0;background:radial-gradient(circle at center, #1b1b2a 0%, #0a0a12 100%);padding:28px;text-align:center;flex-direction:column;align-items:center;justify-content:center;z-index:5;">
+        <div id="fallbackPosterThumb" style="width:100px;height:140px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:14px;box-shadow:0 10px 25px rgba(0,0,0,0.8);border:2px solid var(--border-highlight);"></div>
+        <h3 id="fallbackMovieTitle" style="font-size:20px;font-weight:800;margin-bottom:8px;color:#fff;">Movie Trailer</h3>
+        <p style="font-size:13px;color:var(--text-muted);max-width:440px;margin-bottom:18px;line-height:1.5;">
+          YouTube restrictions (Embedding/Origin policy) might block in-page preview on local files. Click below to stream the official trailer in 4K directly on YouTube!
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+          <a id="fallbackYtBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:10px 22px;font-size:13.5px;">
+            ▶ Watch Trailer on YouTube
+          </a>
+          <button class="btn btn-trailer" onclick="closeTrailer()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span id="toastIcon" style="font-size:18px;">✅</span>
+  <span id="toastMsg">Movie saved</span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
