@@ -15,6 +15,12 @@ PopcornPick is a movie recommendation web app that suggests films based on your 
 - **Frontend:** HTML, CSS, JavaScript
 - **Data:** Movie database API
 
+## 📸 Preview
+
+<p align="center">
+  <img src="assets/preview.png" alt="PopcornPick Preview" width="800">
+</p>
+
 ## 🛠️ Getting Started
 
 ```bash
